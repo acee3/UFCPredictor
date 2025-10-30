@@ -1,3 +1,13 @@
-ufc_out/
-.ipynb_checkpoints/
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info/
+
 .DS_Store
+
+.venv/
+
+data/
+notebooks/ipynb_checkpoints/

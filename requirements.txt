@@ -1,7 +1,0 @@
-requests
-requests-cache
-beautifulsoup4
-tenacity
-pandas
-python-dateutil
-tqdm
