@@ -31,7 +31,7 @@ def run_pipeline(
     y = feature_df["outcome"]
     X = feature_df.drop(columns=["outcome"])
 
-    X_train, X_test, y_train, y_test = _split_data(splitter, X, y)
+    X_train, X_test, y_train, y_test = splitter.split(X, y)
 
     pipeline = Pipeline(steps=[("model", model)])
     pipeline.fit(X_train, y_train)
@@ -120,13 +120,3 @@ def _raise_if_missing(
         return
     formatted_missing = ", ".join(sorted(missing))
     raise ValueError(f"Feature builder '{builder_id}' {error_template.format(missing=formatted_missing)}")
-
-
-def _split_data(
-    splitter: TrainTestSplitStrategy,
-    X: pd.DataFrame,
-    y: pd.Series,
-) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
-    if hasattr(splitter, "split"):
-        return splitter.split(X, y)  # type: ignore[call-arg]
-    return splitter(X, y)
