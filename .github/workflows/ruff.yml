@@ -1,0 +1,22 @@
+name: Ruff
+
+on:
+  push:
+    paths:
+      - "**.py"
+      - "**.toml"
+      - ".github/workflows/ruff.yml"
+  pull_request:
+    paths:
+      - "**.py"
+      - "**.toml"
+      - ".github/workflows/ruff.yml"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - name: Run Ruff
+        run: uvx ruff check
