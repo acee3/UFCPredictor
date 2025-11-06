@@ -4,24 +4,21 @@ import pandas as pd
 from sklearn.base import BaseEstimator
 from sklearn.pipeline import Pipeline
 
-from .data_sources import DataSource
+from .data_sources import BaseFightsDataSource, DataSource
 from .features import FeatureBuilder
 from .splitters import TrainTestSplitStrategy
-from .types import BaseFightInput, TrainingResult
+from .types import TrainingResult
 
 
 def run_pipeline(
-    base_inputs: Sequence[BaseFightInput],
+    base_fights_source: BaseFightsDataSource,
     data_sources: Sequence[DataSource],
     engineered_features: Sequence[FeatureBuilder],
     splitter: TrainTestSplitStrategy,
     model: BaseEstimator,
 ) -> TrainingResult:
     """Assemble, fit, and return an sklearn pipeline based on configurable components."""
-    if not base_inputs:
-        raise ValueError("base_inputs must contain at least one record.")
-
-    base_df = _build_base_dataframe(base_inputs)
+    base_df = base_fights_source.load()
     feature_df = _merge_data_sources(base_df, data_sources)
     feature_df = _apply_feature_builders(feature_df, data_sources, engineered_features)
 
@@ -46,11 +43,6 @@ def run_pipeline(
         y_test=y_test,
         y_pred=y_pred,
     )
-
-
-def _build_base_dataframe(base_inputs: Sequence[BaseFightInput]) -> pd.DataFrame:
-    records = [base_input.to_record() for base_input in base_inputs]
-    return pd.DataFrame.from_records(records)
 
 
 def _merge_data_sources(

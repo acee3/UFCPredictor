@@ -1,3 +1,4 @@
 from .base import DataSource
+from .base_fights import BaseFightsDataSource
 
-__all__ = ["DataSource"]
+__all__ = ["DataSource", "BaseFightsDataSource"]
