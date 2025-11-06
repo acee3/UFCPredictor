@@ -37,8 +37,8 @@ class DataSource(ABC):
         
     @property
     @abstractmethod
-    def Columns(cls) -> type[StrEnum]:
-        """Subclasses must define a class-level Enum called Columns"""
+    def OutputDFColumns(cls) -> type[StrEnum]:
+        """Subclasses must define a class-level Enum called OutputDFColumns"""
         ...
 
     @abstractmethod
