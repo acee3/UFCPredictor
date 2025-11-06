@@ -3,7 +3,7 @@ from typing import Tuple, Union
 
 from sklearn.pipeline import Pipeline
 import pandas as pd
-
+import numpy as np
 
 @dataclass(frozen=True)
 class BaseFightInput:
@@ -31,4 +31,4 @@ class TrainingResult:
     X_test: pd.DataFrame
     y_train: pd.Series
     y_test: pd.Series
-    test_output: pd.DataFrame
+    y_pred: np.ndarray

@@ -35,10 +35,8 @@ def run_pipeline(
 
     pipeline = Pipeline(steps=[("model", model)])
     pipeline.fit(X_train, y_train)
-    
-    test_predictions = pipeline.predict(X_test)
-    test_output = pd.DataFrame({"prediction": test_predictions}, index=y_test.index.copy())
-    test_output["actual"] = y_test
+
+    y_pred = pipeline.predict(X_test)
 
     return TrainingResult(
         trained_pipeline=pipeline,
@@ -46,7 +44,7 @@ def run_pipeline(
         X_test=X_test,
         y_train=y_train,
         y_test=y_test,
-        test_output=test_output,
+        y_pred=y_pred,
     )
 
 
