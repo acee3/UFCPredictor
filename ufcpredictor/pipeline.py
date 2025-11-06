@@ -23,7 +23,9 @@ def run_pipeline(
     feature_df = _apply_feature_builders(feature_df, data_sources, engineered_features)
 
     if "outcome" not in feature_df.columns:
-        raise KeyError("The consolidated feature DataFrame must contain an 'outcome' column.")
+        raise KeyError(
+            "The consolidated feature DataFrame must contain an 'outcome' column."
+        )
 
     y = feature_df["outcome"]
     X = feature_df.drop(columns=["outcome"])
@@ -109,4 +111,6 @@ def _raise_if_missing(
     if not missing:
         return
     formatted_missing = ", ".join(sorted(missing))
-    raise ValueError(f"Feature builder '{builder_id}' {error_template.format(missing=formatted_missing)}")
+    raise ValueError(
+        f"Feature builder '{builder_id}' {error_template.format(missing=formatted_missing)}"
+    )

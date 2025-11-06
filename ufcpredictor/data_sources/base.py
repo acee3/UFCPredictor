@@ -34,7 +34,7 @@ class DataSource(ABC):
     def feature_prefix(self) -> str:
         """Prefix applied to overlapping feature names to avoid collisions."""
         return self._feature_prefix
-        
+
     @property
     @abstractmethod
     def OutputDFColumns(cls) -> type[StrEnum]:
@@ -60,10 +60,14 @@ class DataSource(ABC):
             validate="one_to_one",
         )
 
-    def _assert_join_keys(self, df: pd.DataFrame, context: str = "base DataFrame") -> None:
+    def _assert_join_keys(
+        self, df: pd.DataFrame, context: str = "base DataFrame"
+    ) -> None:
         missing = [key for key in self.join_keys if key not in df.columns]
         if missing:
-            raise KeyError(f"{context} missing join keys required by {self.id}: {missing}")
+            raise KeyError(
+                f"{context} missing join keys required by {self.id}: {missing}"
+            )
 
     def _dedupe_feature_columns(
         self,

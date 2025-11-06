@@ -21,7 +21,7 @@ class BaseFightsDataSource(DataSource):
         BLUE_NAME = "blue_name"
         REFEREE = "referee"
         OUTCOME = "outcome"
-        
+
     class Outcome(IntEnum):
         RED_WIN = 0
         BLUE_WIN = 1
@@ -34,7 +34,9 @@ class BaseFightsDataSource(DataSource):
         join_keys: Sequence[str] = (OutputDFColumns.FIGHT_ID,),
         outcome_column_name: str = "outcome",
     ) -> None:
-        super().__init__(source_id="base_fights", join_keys=join_keys, feature_prefix="base")
+        super().__init__(
+            source_id="base_fights", join_keys=join_keys, feature_prefix="base"
+        )
         self._csv_path = csv_path
         self._outcome_column_name = outcome_column_name
 
@@ -47,10 +49,10 @@ class BaseFightsDataSource(DataSource):
         return df
 
     def _map_outcome(self, row: pd.Series) -> int | None:
-        red = (row.get('red_result') or '').strip().upper()
-        blue = (row.get('blue_result') or '').strip().upper()
-        if red.startswith('W'):
+        red = (row.get("red_result") or "").strip().upper()
+        blue = (row.get("blue_result") or "").strip().upper()
+        if red.startswith("W"):
             return BaseFightsDataSource.Outcome.RED_WIN
-        if blue.startswith('W'):
+        if blue.startswith("W"):
             return BaseFightsDataSource.Outcome.BLUE_WIN
         return BaseFightsDataSource.Outcome.DRAW_NO_CONTEST

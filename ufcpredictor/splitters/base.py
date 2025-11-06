@@ -12,6 +12,4 @@ class TrainTestSplitStrategy(Protocol):
         self,
         X: pd.DataFrame,
         y: pd.Series,
-    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
-        ...
-
+    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]: ...
