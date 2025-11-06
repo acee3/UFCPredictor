@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from enum import StrEnum
 from typing import Sequence
 
 import pandas as pd
@@ -33,10 +34,17 @@ class DataSource(ABC):
     def feature_prefix(self) -> str:
         """Prefix applied to overlapping feature names to avoid collisions."""
         return self._feature_prefix
+        
+    @property
+    @abstractmethod
+    def Columns(cls) -> type[StrEnum]:
+        """Subclasses must define a class-level Enum called Columns"""
+        ...
 
     @abstractmethod
     def load(self) -> pd.DataFrame:
         """Return a DataFrame containing the features this data source owns."""
+        ...
 
     def augment(self, base_df: pd.DataFrame, how: str = "left") -> pd.DataFrame:
         """Merge the data source features into the provided DataFrame."""
